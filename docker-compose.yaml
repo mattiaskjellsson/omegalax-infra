@@ -1,0 +1,53 @@
+version: '3'
+services:
+  front:
+    image: 'mattiaskjellsson/omegalax-front2:truck'
+    container_name: front
+    ports:
+      - '80:80'
+    depends_on:
+      - "back"
+      - "mongo_lax"
+    networks:
+      - laxnet
+  back:
+    container_name: back
+    image: 'mattiaskjellsson/omegalax-api2:master'
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    depends_on:
+      - "mongo_lax"
+    environment:
+      - API_PORT=${API_PORT}
+      - SEND_ALARM=${SEND_ALARM}
+      - ALARM_KEY=${ALARM_KEY}
+      - ALARM_URL=${ALARM_URL}
+      - REQUESTS_PER_MINUTE=${REQUESTS_PER_MINUTE}
+      - INSERT_KEY=${INSERT_KEY}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_LOGGING=${DB_LOGGING}
+      - DAYS_TO_KEEP_DATA=${DAYS_TO_KEEP_DATA}
+    networks:
+      - laxnet
+  mongo_lax:
+    image: mongo:latest
+    container_name: mongo_lax
+    restart: always
+    volumes:
+      - ./docker-volumes/mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+    ports:
+      - ${DB_PORT}:27017
+    networks:
+      - laxnet
+networks: 
+  laxnet:
+    driver: bridge
