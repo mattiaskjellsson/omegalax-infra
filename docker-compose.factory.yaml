@@ -4,7 +4,7 @@ services:
     image: 'mattiaskjellsson/omegalax-front2:factory'
     container_name: front
     ports:
-      - '80:80'
+      - '8080:80'
     depends_on:
       - "back"
       - "mongo_lax"
