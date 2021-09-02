@@ -12,12 +12,11 @@ services:
       - ./config/reverse/certs:/etc/ssl/private
     restart: always
     networks:
-      - class-net
+      - laxnet
     depends_on:
-      - dev_class_poll
-      - dev_class_poll_admin
-      - dev_class_poll_api
-      - dev_class_poll_db
+      - front
+      - back
+      - mongo_lax
   front:
     image: 'mattiaskjellsson/omegalax-front2:factory'
     container_name: front
