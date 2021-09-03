@@ -10,7 +10,6 @@ services:
     volumes:
       - ./config/reverse/nginx:/etc/nginx
       - ./config/reverse/certs:/etc/ssl/private
-      # - ./config/reverse/etc/hosts:/etc/hosts
     restart: always
     networks:
       - laxnet
