@@ -16,7 +16,6 @@ services:
     links: 
       - front
       - back
-      - mongo_lax
     depends_on:
       - front
       - back
@@ -26,6 +25,8 @@ services:
     container_name: front
     ports:
       - '8080:80'
+    links:
+      - back
     depends_on:
       - "back"
       - "mongo_lax"
@@ -55,6 +56,8 @@ services:
       - DAYS_TO_KEEP_DATA=${DAYS_TO_KEEP_DATA}
     networks:
       - laxnet
+    links:
+      - mongo_lax
   mongo_lax:
     image: mongo:latest
     container_name: mongo_lax
