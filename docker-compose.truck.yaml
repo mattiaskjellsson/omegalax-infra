@@ -37,8 +37,7 @@ services:
     networks:
       - laxnet
   mongo_lax:
-    # image: mongo:latest
-    image: malaslt/mongodb-rpi
+    image: mongo:latest
     container_name: mongo_lax
     restart: always
     volumes:
